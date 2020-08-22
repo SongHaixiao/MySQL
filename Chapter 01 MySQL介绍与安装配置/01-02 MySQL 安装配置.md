@@ -40,9 +40,7 @@ MySQL社区版的下载地址： http://dev.mysql.com/downloads/mysql/
 
 ![](Resources/08.png)
 
-**MySQL最新版本8.0.18的下载地址**:
 
-https://dev.mysql.com/get/Downloads/MySQLInstaller/mysql-installer-community-8.0.18.0.msi
 
 ## 安装MySQL（1）
 
