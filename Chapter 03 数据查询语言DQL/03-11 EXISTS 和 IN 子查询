@@ -1,0 +1,106 @@
+# EXISTS 和 IN 子查询
+
+### 子查询
+
+> **子查询是将一个查询语句嵌套在另一个查询语句中**；
+>
+> **在特定情况下，一个查询语句的条件需要另一个查询语句来获取，内层查询（inner query）语句的查询结果，可以为外层查询（outer query）语句提供查询条件。**
+
+
+
+<img src="Resources/87.jpg"/>
+
+### 子查询 EXISTS
+
+> **EXISTS是子查询中用于测试内部查询是否返回任何行的布尔运算符。**
+>
+> **将主查询的数据放到子查询中做条件验证，根据验证结果（TRUE 或 FALSE）来决定主查询的数据结果是否保留。**
+>
+> **NOT EXISTS 与之相反。**
+
+```mysql
+#where子句使用exists语法
+SELECT column_name1 
+FROM table_name1 
+WHERE EXISTS (SELECT * FROM table_name2 WHERE condition);
+```
+
+```mysql
+#where子句使用 not exists语法
+SELECT column_name1 
+FROM table_name1 
+WHERE NOT EXISTS (SELECT * FROM table_name2 WHERE condition);
+```
+
+
+
+### 子查询 IN 
+
+> **运算符 IN，它允许我们在 WHERE 子句中过滤某个字段的多个值。**
+
+```mysql
+#where子句使用in语法
+
+SELECT column_name FROM table_name WHERE column_name IN(value1, value2, …)
+```
+
+
+
+>**如果运算符 in 后面的值是来源于某个查询结果，并非是指定的几个值，这时就需要用到子查询。**
+>
+>**子查询又称为内部查询或嵌套查询，即在 SQL 查询的 WHERE 子句中嵌入查询语句**
+
+```mysql
+#子查询in语法
+
+SELECT column_name FROM table_name 
+WHERE column_name IN(
+ 	SELECT column_name FROM table_name [WHERE]
+);
+```
+
+### 例子
+
+- 创建并打印 student、score 表
+
+  <img src="Resources/88.jpg"/>
+
+- 查询所有选修了课程的学生
+
+  ```mysql
+  select A.*
+  from student
+  where A.stu_no in (select B.stu_no from score B);
+  ```
+
+  <img src="Resources/89.jpg"/>
+
+- 查询选修了离散数学的学生
+
+  ```mysql
+  select A.*
+  from student
+  where A.stu_no in (select B.stu_no from score B where B.course = '离散数学');
+  ```
+
+  <img src="Resources/90.jpg"/>
+
+- 查询所有选修了课程的学生
+
+  ```mysql
+  select A.*
+  from student A
+  where exists(select * from score B where A.stu_no = B.stu_no);
+  ```
+
+  <img src="Resources/91.jpg"/>
+
+- 查询所有未选修课程的学生
+
+  ```mysql
+  select A.*
+  from student A
+  where not exists(select * from score B where A.stu_no = B.stu_no);
+  ```
+
+  <img src="Resources/92.jpg"/>
