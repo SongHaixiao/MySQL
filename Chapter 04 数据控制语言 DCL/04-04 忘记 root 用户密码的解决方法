@@ -1,0 +1,153 @@
+忘记 root 密码的解决方法
+
+### 解决步骤
+
+在 MySQL 中，如果只是忘记普通用户的密码很好解决，只需要使用 root 用户登陆后重置其密码即可。但是，如果忘记 root 用户密码，怎么办呢？
+
+以下步骤为：
+
+>1. **关闭 MySQL 服务**
+>2. **关闭权限验证**
+>3. **修改 root 密码**
+>4. **正常启动 MySQL 服务**
+
+<img src="Resources/14.jpg"/>
+
+### 重启 MySQL 时 关闭权限验证
+
+```mysql
+# 关闭权限验证
+mysqld --defaults-file="C:\ProgramData\MySQL\MySQL Server 8.0\my.ini" --console --skip-grant-tables --shared-memory
+```
+
+参数说明：
+
+​	-- defaults-file ：配置文件 my.ini 的完整路径
+
+​	-- console ： 将错误日志消息写入 stderr 和 stdout,即使指定了 --log-error。在 	                      Windows 中，如果使用该选项，mysql不关闭控制台窗口。
+
+​	-- shared-memory ：启用本地客户端的共享内存连接，该选项只用于     
+
+​                                     Windows.
+
+<img src="Resources/15.jpg"/>
+
+### 修改 root 用户密码
+
+MySQL 关闭权限验证后，直接通过 mysql 命令即可连接到数据库，并可正常执行各类操作。
+
+- 刷新权限
+
+  ```mysql
+  # 刷新权限
+  FLUSH PRIVILEGES;
+  
+  # 修改 root 用户的密码
+  ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
+  
+  ```
+
+  <img src="Resources/16.jpg"/>
+
+### 操作
+
+#### 第一步：关闭 mysql 服务
+
+方法一：
+
+<img src="Resources/17.jpg"/>
+
+方法二：
+
+<img src="Resources/18.jpg"/>
+
+​	<img src="Resources/19.jpg"/>
+
+
+
+
+
+#### 第二步：关闭权限验证
+
+<img src="Resources/20.jpg"/>
+
+### 第三部：修改 root 密码
+
+- 重新启动，MySQL 
+
+  <img src="Resources/21.jpg"/>
+
+- 查看存在的数据库
+
+  ```mysql
+  show databases;
+  ```
+
+  <img src="Resources/22.jpg"/>
+
+- 查看 mydb 数据库的 user 表 中 localhost 名字为 'localhost'
+
+  ```mysql
+  # 进入 mydb 数据库
+  use mydb
+  
+  # 打印 mydb 中的所有表
+  show tables;
+  
+  # 查看 user 表
+  select user,host from user;
+  ```
+
+<img src="Resources/23.jpg"/>
+
+<img src="Resources/24.jpg"/>
+
+<img src="Resources/25.jpg"/>
+
+- 改变 root 密码
+
+  ```mysql
+  # 刷新权限
+  flush privileges;
+  
+  # 更新 root 密码
+  alter user 'root'@'localhost' identified by '123456';
+  ```
+
+  <img src="Resources/26.jpg"/>
+
+### 第四步：正常启动 MySQL
+
+- 启动 mysql
+
+<img src="Resources/27.jpg"/>
+
+- 输入刚刚改过的密码
+
+  ```mysql
+  mysql -h localhost -u root -p
+  ```
+
+  <img src="Resources/28.jpg"/>
+
+- 打印 存在的数据库
+
+  ```mysql
+  show databases;
+  ```
+
+- 使用 mysql 数据库
+
+  ```mysql
+  use mysql;
+  ```
+
+  
+
+- 打印所有的 表
+
+  ```mysql
+  show tables;
+  ```
+
+  <img src="Resources/29.jpg"/>
