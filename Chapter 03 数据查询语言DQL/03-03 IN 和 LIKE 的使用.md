@@ -1,6 +1,6 @@
 # IN 和 LIKE 的使用
 
-[toc]
+
 
 ## Target
 
@@ -78,8 +78,6 @@ SELECT * FROM employee WHERE name LIKE '李_';
 
 <img src="Resources/20.jpg"/>
 
-- 查询姓名以芳结尾的数据
+- 查询姓名以芳结尾的数据, 和 查询姓名带小字的数据
 
 <img src="Resources/21.jpg"/>
-
-- 查询姓名带小字的数据

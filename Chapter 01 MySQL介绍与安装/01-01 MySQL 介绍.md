@@ -91,9 +91,3 @@ RDBMS是Relational Database Management System的简称，即关系型数据库�
   - **体积小，速度快，开源免费；最流行的关系型数据库管理系统**
 
 
-
-
-
-
-
-@ 	笔记记录于 2020-8-21 22:50:38	FROM	CSDN 《MySQL数据库入门实战课 ---  柳峰》
